@@ -1,0 +1,123 @@
+const express = require("express");
+
+const router = express.Router()
+
+const Product = require("../models/product.model");
+
+// create product -- admin
+router.post("", async(req, res)=>{
+    try{
+        const product = await Product.create(req.body);
+        return res.status(201).json({
+            success : true,
+            product
+        })
+    }
+    catch(e){
+        return res.status(500).json({ message: e.message, status: "failed" });
+    }
+});
+
+
+
+// get all products
+router.get("", async(req, res)=>{
+    try{
+        const products = await Product.find().lean().exec();
+        return  res.status(201).json({
+            success : true,
+            products
+        })
+    }
+    catch (e) {
+        return res.status(500).json({ message: e.message, status: "failed" });
+      }
+})
+
+
+//update product-- admin
+
+router.patch("/:id", async(req, res)=>{
+    try{
+        let product = await Product.findById(req.params.id);
+
+        if( !product){
+            return res.status(500).json({
+                success : false, 
+                message : "Product not found"
+            })
+        }
+
+        product = await Product.findByIdAndUpdate(req.params.id,
+            req.body, {
+                new:true
+            })
+            .lean()
+            .exec();
+
+            res.status(200).json({
+                success : true,
+                product
+            })
+    }
+    catch (e) {
+        return res.status(500).json({ message: e.message, status: "failed" });
+      }
+})
+
+
+
+// delete a single product -- admin
+
+router.delete("/:id", async(req, res)=>{
+    try{
+        let product = await Product.findById(req.params.id);
+
+        if( !product){
+            return res.status(500).json({
+                success : false, 
+                message : "Product not found"
+            })
+        }
+
+        product = await Product.findByIdAndDelete(req.params.id)
+            .lean()
+            .exec();
+
+            res.status(200).json({
+                success : true,
+                product
+            })
+    }
+    catch (e) {
+        return res.status(500).json({ message: e.message, status: "failed" });
+      }
+})
+
+// get a single product details
+
+
+router.get("/:id", async(req, res)=>{
+    try{
+        let product = await Product.findById(req.params.id);
+
+        if( !product){
+            return res.status(500).json({
+                success : false, 
+                message : "Product not found"
+            })
+        }
+
+      
+
+          return  res.status(200).json({
+                success : true,
+                product
+            })
+    }
+    catch (e) {
+        return res.status(500).json({ message: e.message, status: "failed" });
+      }
+})
+
+module.exports = router;
