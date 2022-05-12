@@ -23,7 +23,9 @@ router.post("", async(req, res)=>{
 // get all products
 router.get("", async(req, res)=>{
     try{
-        const products = await Product.find().lean().exec();
+        const products = await Product.find()
+        .sort({price : 1})
+        .lean().exec();
         return  res.status(201).json({
             success : true,
             products
@@ -42,7 +44,7 @@ router.patch("/:id", async(req, res)=>{
         let product = await Product.findById(req.params.id);
 
         if( !product){
-            return res.status(500).json({
+            return res.status(404).json({
                 success : false, 
                 message : "Product not found"
             })
@@ -74,7 +76,7 @@ router.delete("/:id", async(req, res)=>{
         let product = await Product.findById(req.params.id);
 
         if( !product){
-            return res.status(500).json({
+            return res.status(404).json({
                 success : false, 
                 message : "Product not found"
             })
@@ -97,12 +99,13 @@ router.delete("/:id", async(req, res)=>{
 // get a single product details
 
 
-router.get("/:id", async(req, res)=>{
+router.get("/single/:id", async(req, res)=>{
     try{
         let product = await Product.findById(req.params.id);
+        console.log(product);
 
         if( !product){
-            return res.status(500).json({
+            return res.status(404).json({
                 success : false, 
                 message : "Product not found"
             })
@@ -119,5 +122,38 @@ router.get("/:id", async(req, res)=>{
         return res.status(500).json({ message: e.message, status: "failed" });
       }
 })
+
+
+
+// get searched query products results
+
+router.get("/search/", async(req, res)=>{
+    try{
+
+        let product = await Product.find(
+          { "title": { "$regex": req.query.keyword, "$options": "i" }}
+          
+        );
+        console.log(req.query, "line 135");
+
+        if( !product){
+            return res.status(404).json({
+                success : false, 
+                message : "Product not found"
+            })
+        }
+
+      
+
+          return  res.status(200).json({
+                success : true,
+                product
+            })
+    }
+    catch (e) {
+        return res.status(500).json({ message: e.message, status: "failed" });
+      }
+})
+
 
 module.exports = router;
