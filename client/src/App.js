@@ -1,9 +1,10 @@
 import './App.css';
+import Header from './components/layout/Header';
 
 function App() {
   return (
   <>
-  <h1>Hello I am App</h1>
+  <Header/>
   </>
   );
 }
