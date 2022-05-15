@@ -1,6 +1,14 @@
 import React from 'react'
 import "./Home.css"
+import Product from './Product';
+import MouseOutlinedIcon from '@mui/icons-material/MouseOutlined';
 
+const product = {
+  _id : 1 ,
+  title : "first product",
+  images : ["https://rukminim1.flixcart.com/image/312/312/l0igvww0/t-shirt/o/i/b/m-m407-fs-camopocket-olive-lewel-original-imagca4kwtfkxzfg.jpeg?q=70"],
+  price :"₹3000"
+}
 function Home() {
   return (
     <>
@@ -10,11 +18,25 @@ function Home() {
 
         <a href="#container">
             <button> 
-                Scroll 
+                Scroll <MouseOutlinedIcon
+                fontSize="small"
+                />
             </button>
         </a>
     </div>
-    
+    <h2 className="homeHeading">
+      Featured Products
+    </h2>
+    <div className="container" id="container">
+      <Product product={product}/>
+      <Product product={product}/>
+      <Product product={product}/>
+      <Product product={product}/>
+      <Product product={product}/>
+      <Product product={product}/>
+      <Product product={product}/>
+      <Product product={product}/>
+    </div>
     </>
   )
 }
