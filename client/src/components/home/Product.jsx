@@ -15,8 +15,8 @@ const options = {
 function Product({product}) {
   return (
     <>
-    <Link className='productCard' to={product._id} >
-        <img src={product.images[0]} alt={product.title} />
+    <Link className='productCard' to={`/${product._id}`} >
+        <img src={product.images[0].url} alt={product.title} />
         <p>{product.title}</p>
         <div>
         <StarRatings
