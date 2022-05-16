@@ -2,8 +2,12 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import StarRatings from 'react-star-ratings';
 
-const options = {
-    rating :3.5,
+
+
+function Product({product}) {
+
+  const options = {
+    rating :product.ratings,
     starRatedColor :"tomato",
     numberOfStars : 5,
     name:'rating',
@@ -11,8 +15,6 @@ const options = {
     starDimension: "18px",
     starSpacing: "2px"
 }
-
-function Product({product}) {
   return (
     <>
     <Link className='productCard' to={`/${product._id}`} >
@@ -22,9 +24,9 @@ function Product({product}) {
         <StarRatings
          {...options}
         />
-      &nbsp; &nbsp; &nbsp;  <span>230 Reviews</span>
+      &nbsp; &nbsp; &nbsp;  <span>( {product.numOfReviews} Reviews )</span>
         </div>
-        <span>{product.price}</span>
+        <span>{`₹ ${"  "}${product.price}`}</span>
     </Link>
     </>
   )

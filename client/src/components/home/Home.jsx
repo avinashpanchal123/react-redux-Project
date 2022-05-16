@@ -15,6 +15,8 @@ const product = {
 }
 function Home() {
 
+  const {loading, error, products} = useSelector( state => state.products)
+
   const dispatch = useDispatch();
 
   useEffect(()=>{
@@ -23,31 +25,33 @@ function Home() {
   return (
     <>
     <MetaData title="ECOMMERCE"/>
-    <div className="banner">
-        <p>Welcome to Ecommerce</p>
-        <h1>FIND AMAZING RPODUCTS BELOW</h1>
-
-        <a href="#container">
-            <button> 
-                Scroll <MouseOutlinedIcon
-                fontSize="small"
-                />
-            </button>
-        </a>
-    </div>
-    <h2 className="homeHeading">
-      Featured Products
-    </h2>
-    <div className="container" id="container">
-      <Product product={product}/>
-      <Product product={product}/>
-      <Product product={product}/>
-      <Product product={product}/>
-      <Product product={product}/>
-      <Product product={product}/>
-      <Product product={product}/>
-      <Product product={product}/>
-    </div>
+    {
+      loading ? "loading" :
+      <>
+      <div className="banner">
+         <p>Welcome to Ecommerce</p>
+         <h1>FIND AMAZING RPODUCTS BELOW</h1>
+ 
+         <a href="#container">
+             <button> 
+                 Scroll <MouseOutlinedIcon
+                 fontSize="small"
+                 />
+             </button>
+         </a>
+     </div>
+     <h2 className="homeHeading">
+       Featured Products
+     </h2>
+     <div className="container" id="container">
+      {
+        products && products.map(product =>
+         <Product key={product._id} product={product}/>
+         )
+      }
+     </div>
+      </>
+    }
     </>
   )
 }
