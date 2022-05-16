@@ -4,7 +4,8 @@ import Product from './Product';
 import MouseOutlinedIcon from '@mui/icons-material/MouseOutlined';
 import MetaData from '../layout/MetaData';
 import { getProducts } from '../../redux/actions/productAction';
-import {useSelector, useDispatch} from "react-redux"
+import {useSelector, useDispatch} from "react-redux";
+import Loader from '../layout/loader/Loader';
 const product = {
   _id : 123344,
   title : "first product",
@@ -26,7 +27,7 @@ function Home() {
     <>
     <MetaData title="ECOMMERCE"/>
     {
-      loading ? "loading" :
+      loading ? <Loader/> :
       <>
       <div className="banner">
          <p>Welcome to Ecommerce</p>
