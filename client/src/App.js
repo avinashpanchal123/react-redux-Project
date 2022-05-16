@@ -1,6 +1,9 @@
+import { Routes, Route } from 'react-router-dom';
+
 import Header from './components/layout/Header';
 import Home from './components/home/Home';
-import { Routes, Route } from 'react-router-dom';
+import ProductDetails from './components/product/ProductDetails';
+
 
 function App() {
   return (
@@ -8,6 +11,7 @@ function App() {
   <Header/>
   <Routes>
   <Route exact path='/' element={<Home />}/>
+  <Route exact path='/products/:id' element={<ProductDetails />}/>
   </Routes>
   
   </>

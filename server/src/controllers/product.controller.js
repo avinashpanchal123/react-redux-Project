@@ -99,7 +99,7 @@ router.delete("/:id", async(req, res)=>{
 // get a single product details
 
 
-router.get("/single/:id", async(req, res)=>{
+router.get("/:id", async(req, res)=>{
     try{
         let product = await Product.findById(req.params.id);
         console.log(product);
